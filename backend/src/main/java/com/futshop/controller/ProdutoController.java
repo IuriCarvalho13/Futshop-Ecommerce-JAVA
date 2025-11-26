@@ -1,15 +1,19 @@
+// Pacote onde o controller está localizado
 package com.futshop.controller;
 
+// Importa a classe Produto do pacote model
 import com.futshop.model.Produto;
+// Importa o repositório que faz a comunicação com o banco de dados
 import com.futshop.repository.ProdutoRepository;
 
-// Importar o Service para acessar a lógica de negócio
+// Importa o Service com as regras de negócio
 import com.futshop.service.ProdutoService; 
 
-// Importar as classes para o Checkout
-import com.futshop.dto.CheckoutItemDTO; // Importe o DTO do carrinho
-import com.futshop.exception.EstoqueInsuficienteException; // Importe a exceção de negócio
+// Importa os itens usados no processo de checkout
+import com.futshop.dto.CheckoutItemDTO; 
+import com.futshop.exception.EstoqueInsuficienteException; 
 
+// Importações do Spring necessárias para o Controller funcionar
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,99 +22,153 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
+// Permite requisições vindas do frontend hospedado no endereço informado
 @CrossOrigin(origins = "http://127.0.0.1:5500") 
+// Indica que esta classe é um controller REST
 @RestController
+// Define o caminho base para os endpoints deste controller
 @RequestMapping("/api/produtos")
 public class ProdutoController {
 
+    // Injeta o Service para acessar regras de negócio
     @Autowired
     private ProdutoService produtoService; 
     
+    // Injeta o repositório para operações diretas com o banco
     @Autowired
     private ProdutoRepository produtoRepository;
 
 
-    // 1. GET: Listar todos os produtos ou FILTRAR por nome (READ)
-    // Aceita um parâmetro 'termo' opcional para pesquisa
+    // ---------------------------
+    // 1. GET: Listar produtos (com filtro opcional)
+    // ---------------------------
+
     @GetMapping
     public List<Produto> listarProdutos(@RequestParam(required = false) String termo) {
+        // Verifica se foi enviado um termo de pesquisa
         if (termo != null && !termo.trim().isEmpty()) {
-            // Se houver um termo, chama o método de busca por nome no Service
+            // Retorna produtos que contenham o termo no nome
             return produtoService.buscarPorNome(termo);
         }
-        // Se não houver termo, retorna todos os produtos
+        // Caso não tenha termo, retorna todos os produtos
         return produtoService.buscarTodos(); 
     }
 
-    // 2. GET: Buscar produto por ID (READ)
+
+    // ---------------------------
+    // 2. GET: Buscar produto por ID
+    // ---------------------------
+
     @GetMapping("/{id}")
     public ResponseEntity<Produto> buscarProdutoPorId(@PathVariable Long id) {
+        // Tenta buscar o produto pelo ID
         Optional<Produto> produto = produtoRepository.findById(id);
-        return produto.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+
+        // Se existir, retorna 200 OK; senão, retorna 404 Not Found
+        return produto.map(ResponseEntity::ok)
+                      .orElseGet(() -> ResponseEntity.notFound().build());
     }
     
-    // 3. POST: Adicionar novo produto (CREATE)
+
+    // ---------------------------
+    // 3. POST: Criar novo produto
+    // ---------------------------
+
     @PostMapping
     public ResponseEntity<Produto> criarProduto(@RequestBody Produto produto) {
-        // Usamos o Service para aplicar quaisquer regras de negócio antes de salvar
+        // Garante que será criado um novo registro no banco
         produto.setId(null); 
+        
+        // Salva o novo produto usando o Service
         Produto novoProduto = produtoService.salvar(produto);
+
+        // Retorna o produto criado com status 201 Created
         return new ResponseEntity<>(novoProduto, HttpStatus.CREATED);
     }
     
-    // 4. PUT: Atualizar produto existente (UPDATE)
-    // Manteve-se a lógica de atualização com a inclusão de todos os campos (descrição, estoque, tamanho)
+
+    // ---------------------------
+    // 4. PUT: Atualizar produto existente
+    // ---------------------------
+
     @PutMapping("/{id}")
     public ResponseEntity<Produto> atualizarProduto(@PathVariable Long id, @RequestBody Produto produtoDetalhes) {
+        
+        // Busca o produto existente
         Optional<Produto> produtoOpt = produtoRepository.findById(id);
 
+        // Se existir, atualiza os dados
         if (produtoOpt.isPresent()) {
             Produto produtoExistente = produtoOpt.get();
             
+            // Atualiza campos básicos
             produtoExistente.setNome(produtoDetalhes.getNome());
             produtoExistente.setPreco(produtoDetalhes.getPreco());
             produtoExistente.setImagemUrl(produtoDetalhes.getImagemUrl());
-            
-            // Campos adicionados/ajustados para serem atualizados (necessário devido à sua modelagem)
+
+            // Atualiza campos adicionais do produto
             produtoExistente.setDescricao(produtoDetalhes.getDescricao());
             produtoExistente.setQuantidadeEmEstoque(produtoDetalhes.getQuantidadeEmEstoque());
             produtoExistente.setTamanho(produtoDetalhes.getTamanho());
 
-            Produto produtoAtualizado = produtoService.salvar(produtoExistente); // Usando service.salvar
+            // Salva o produto atualizado
+            Produto produtoAtualizado = produtoService.salvar(produtoExistente);
+
+            // Retorna o produto atualizado
             return ResponseEntity.ok(produtoAtualizado);
-        } else {
+        } 
+        else {
+            // Se não existir, retorna 404 Not Found
             return ResponseEntity.notFound().build();
         }
     }
     
-    // 5. DELETE: Remover produto (DELETE)
+
+    // ---------------------------
+    // 5. DELETE: Excluir produto
+    // ---------------------------
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletarProduto(@PathVariable Long id) {
+        
+        // Verifica se o produto existe
         if (produtoRepository.existsById(id)) {
+            
+            // Deleta o produto
             produtoRepository.deleteById(id);
+
+            // Retorna 204 No Content
             return ResponseEntity.noContent().build();
+
         } else {
+            // Se não existir, retorna 404
             return ResponseEntity.notFound().build();
         }
     }
     
-    // 6. NOVO ENDPOINT: Finalizar Compra e Baixa de Estoque (UPDATE)
+
+    // ---------------------------
+    // 6. POST: Checkout (baixa de estoque)
+    // ---------------------------
+
     @PostMapping("/checkout")
     public ResponseEntity<?> checkout(@RequestBody List<CheckoutItemDTO> items) {
         try {
-            // Chama o Service para executar a baixa de estoque transacional
+            // Chama o Service para processar a baixa de estoque
             produtoService.processCheckout(items); 
             
-            // Retorna sucesso 200 OK
+            // Se tudo der certo, retorna 200 OK
             return ResponseEntity.ok("Estoque atualizado com sucesso!");
             
         } catch (EstoqueInsuficienteException e) {
-            // Se o Service lançar a exceção de estoque, retorna erro 400 (Bad Request)
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+            // Quando falta estoque, retorna erro 400 com a mensagem
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                                 .body(e.getMessage());
             
         } catch (Exception e) {
-            // Captura outros erros inesperados (ex: produto não encontrado) e retorna erro 500
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro interno ao processar o pedido.");
+            // Captura qualquer outro erro inesperado
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                                 .body("Erro interno ao processar o pedido.");
         }
     }
 }

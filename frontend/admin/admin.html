@@ -1,13 +1,21 @@
+<!-- Declaração do tipo de documento HTML5 -->
 <!DOCTYPE html>
+<!-- Início do documento HTML com idioma português do Brasil -->
 <html lang="pt-br">
 <head>
+    <!-- Definição de codificação de caracteres (UTF-8) -->
     <meta charset="UTF-8">
+    <!-- Meta tag para tornar a página responsiva em dispositivos móveis -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Título que aparece na aba do navegador -->
     <title>FutShop | Área Administrativa</title>
+    <!-- Link para o arquivo CSS externo (estilos principais) -->
     <link rel="stylesheet" href="../css/style.css"> 
+    <!-- Estilos embutidos específicos desta página administrativa -->
     <style>
-        /* Estilos básicos para a página Admin */
+        /* Cor de fundo geral da página */
         body { background-color: #f4f4f4; }
+        /* Container principal centralizado e com espaçamento */
         .admin-container {
             max-width: 1200px;
             margin: 50px auto;
@@ -16,17 +24,20 @@
             border: 1px solid #ccc;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
+        /* Estilo do título principal dentro do container */
         .admin-container h1 {
             color: #000;
             border-bottom: 3px solid #000;
             padding-bottom: 10px;
         }
+        /* Layout do cabeçalho com controles (nome do admin + logout) */
         .header-controls {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 20px;
         }
+        /* Botão de logout — aparência e comportamento básico */
         .logout-button {
             background-color: #cc0000;
             color: white;
@@ -36,14 +47,18 @@
             font-size: 1em;
             text-transform: uppercase;
         }
+        /* Efeito hover para o botão de logout */
         .logout-button:hover { background-color: #990000; }
         
-        /* Estilos CRUD */
+        /* Seção que agrupa funcionalidades CRUD (form + tabela) */
         .crud-section { margin-top: 40px; padding: 20px; border: 1px solid #eee; }
+        /* Título secundário da seção CRUD */
         .crud-section h3 { margin-top: 0; }
+        /* Estilização básica dos inputs e selects dentro do formulário CRUD */
         .crud-form input, .crud-form select { 
             padding: 8px; margin: 5px 0 15px 0; width: 100%; box-sizing: border-box; 
         }
+        /* Textarea do formulário: permite redimensionamento vertical e ocupa largura total */
         .crud-form textarea {
             width: 100%;
             padding: 8px;
@@ -51,48 +66,71 @@
             box-sizing: border-box;
             resize: vertical;
         }
+        /* Estilo padrão para botões de ação (Adicionar, Editar, Deletar) */
         .btn-action { 
             background-color: #000; color: white; padding: 10px 15px; border: none; cursor: pointer; margin-right: 10px; 
             min-width: 100px;
         }
+        /* Variante do botão para ação de deletar (cor vermelha) */
         .btn-action.delete { background-color: #cc0000; }
+        /* Variante do botão para ação de editar */
         .btn-action.edit { background-color: #444; }
+        /* Hover simples para os botões de ação (opacidade) */
         .btn-action:hover { opacity: 0.8; }
         
+        /* Estilização da tabela de produtos: ocupa 100% da largura e remove espaços entre células */
         table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        /* Células da tabela: borda, padding e alinhamento */
         th, td { border: 1px solid #ddd; padding: 10px; text-align: left; font-size: 0.9em; }
+        /* Cabeçalho da tabela com fundo levemente destacado */
         th { background-color: #f2f2f2; }
+        /* Limita largura da segunda coluna (nome) e aplica ellipsis quando o texto é longo */
         td:nth-child(2) { max-width: 250px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        /* Mensagem administrativa (feedback) com padding e borda arredondada */
         .admin-message { margin-top: 15px; padding: 10px; border-radius: 4px; }
+        /* Estilo para mensagem de sucesso */
         .admin-message.success { background-color: #d4edda; color: #155724; border-color: #c3e6cb; }
+        /* Estilo para mensagem de erro */
         .admin-message.error { background-color: #f8d7da; color: #721c24; border-color: #f5c6cb; }
 
     </style>
 </head>
 <body>
+    <!-- Container principal da área administrativa -->
     <div class="admin-container">
+        <!-- Título da dashboard -->
         <h1>Dashboard Administrativo</h1>
 
+        <!-- Cabeçalho com nome do admin e botão de logout -->
         <div class="header-controls">
+            <!-- Exibe uma mensagem de boas-vindas com o nome do admin (alterável via JS) -->
             <p>Bem-vindo(a), **<span id="admin-name">Administrador</span>**.</p>
+            <!-- Botão que deve disparar logout (evento tratado em ../js/admin.js) -->
             <button id="logout-button" class="logout-button">Sair da Área Admin</button>
         </div>
 
+        <!-- Seção de CRUD para gerenciamento de produtos -->
         <div class="crud-section">
             <h3>Gerenciamento de Produtos</h3>
             
+            <!-- Formulário para criar/editar produtos (funcionalidade via JS) -->
             <form id="product-form" class="crud-form">
+                <!-- Campo oculto para armazenar o ID do produto quando em edição -->
                 <input type="hidden" id="product-id">
                 
+                <!-- Campo Nome do Produto -->
                 <label for="product-name">Nome do Produto:</label>
                 <input type="text" id="product-name" required>
 
+                <!-- Campo Descrição (opcional) -->
                 <label for="product-description">Descrição (Opcional):</label>
                 <textarea id="product-description" rows="2"></textarea>
                 
+                <!-- Campo Preço com passo decimal -->
                 <label for="product-price">Preço (R$):</label>
                 <input type="number" id="product-price" step="0.01" required>
 
+                <!-- Select para escolher tamanho -->
                 <label for="product-size">Tamanho:</label>
                 <select id="product-size" required>
                     <option value="P">P</option>
@@ -101,21 +139,28 @@
                     <option value="GG">GG</option>
                 </select>
 
+                <!-- Campo para quantidade em estoque (número mínimo 0) -->
                 <label for="product-stock">Quantidade em Estoque:</label>
                 <input type="number" id="product-stock" min="0" required>
                 
+                <!-- Campo para URL ou Base64 da imagem do produto -->
                 <label for="product-image">URL da Imagem (Base64 ou URL):</label>
                 <input type="text" id="product-image" required>
                 
+                <!-- Botão principal para submeter (criar ou salvar edição) -->
                 <button type="submit" id="submit-button" class="btn-action">Adicionar Produto</button>
+                <!-- Botão para cancelar a edição (visível apenas em modo edição via JS) -->
                 <button type="button" id="cancel-button" class="btn-action edit" style="display:none;">Cancelar Edição</button>
             </form>
 
+            <!-- Parágrafo para exibir mensagens de sucesso/erro ao admin (manipulado por JS) -->
             <p id="admin-message" class="admin-message"></p>
 
+            <!-- Tabela que lista produtos existentes -->
             <table>
                 <thead>
                     <tr>
+                        <!-- Cabeçalhos de coluna: ID, Nome, Preço, Estoque, Tamanho e Ações -->
                         <th>ID</th>
                         <th>Nome</th>
                         <th>Preço</th>
@@ -124,13 +169,16 @@
                         <th>Ações</th>
                     </tr>
                 </thead>
+                <!-- Corpo da tabela preenchido dinamicamente pelo JavaScript -->
                 <tbody id="product-table-body">
+                    <!-- Linha inicial indicando carregamento; substituída quando os dados chegam -->
                     <tr><td colspan="6">Carregando produtos...</td></tr>
                 </tbody>
             </table>
         </div>
     </div>
 
+    <!-- Script que controla comportamento da área administrativa (fetch, CRUD, auth, etc.) -->
     <script src="../js/admin.js"></script>
 </body>
 </html>

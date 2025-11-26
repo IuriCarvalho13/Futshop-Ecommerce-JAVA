@@ -1,101 +1,143 @@
+<!-- Documento HTML principal comentado linha a linha para uso no VSCode -->
 <!DOCTYPE html>
+<!-- Declara o tipo de documento como HTML5 -->
 <html lang="pt-br">
+<!-- Início do elemento raiz; define idioma como Português (Brasil) -->
 <head>
+    <!-- Metadados do documento -->
     <meta charset="UTF-8">
+    <!-- Define a codificação de caracteres para UTF-8 -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Torna a página responsiva em dispositivos móveis -->
     <title>FutShop | Sua Loja de Artigos Esportivos</title>
+    <!-- Título mostrado na aba do navegador -->
     <link rel="stylesheet" href="css/style.css"> 
+    <!-- Link para o arquivo CSS externo (estilos da página) -->
 </head>
 <body>
+    <!-- Corpo da página: conteúdo visível pelo usuário -->
     
     <header class="top-header">
+        <!-- Cabeçalho superior com informações de autenticação e carrinho -->
         <div class="container-top container-flex">
+            <!-- Container para alinhar conteúdo no topo -->
             
             <div id="auth-cart-group">
+                <!-- Agrupa elementos de autenticação e ícone do carrinho -->
                 
                 <div id="auth-container">
+                    <!-- Contêiner para links de login/cadastro e botão de logout -->
                     <a href="#" id="open-login-modal" class="top-link">LOGIN/CADASTRO</a> 
+                    <!-- Link que abre o modal de login/cadastro (ativado via JS) -->
                     
                     <button id="logout-button-client" style="display: none;">Sair</button>
+                    <!-- Botão de logout, escondido por padrão até o usuário logar -->
                 </div>
                 
                 <a href="#" class="cart-icon" id="open-cart-modal">🛒 <span class="cart-count">0</span></a>
+                <!-- Ícone do carrinho com contador de itens; abre o modal do carrinho -->
             </div>
             
         </div>
     </header>
 
     <nav class="main-nav">
+        <!-- Barra de navegação principal -->
         <div class="container-nav">
+            <!-- Container para centralizar conteúdo da nav -->
             <div class="logo">FutShop</div>
+            <!-- Nome ou logotipo da loja -->
         </div>
     </nav>
 
     <div class="search-container">
+        <!-- Área da barra de busca -->
         <div class="container-nav">
             <div class="search-bar">
+                <!-- Formulário de busca para o site -->
                 <form id="search-form">
+                    <!-- ID utilizado pelo script para escutar submissões -->
                     <input type="text" id="search-input" placeholder="O que você procura?">
+                    <!-- Campo de texto onde o usuário digita o termo de busca -->
                     <button type="submit" id="search-button">🔍</button>
+                    <!-- Botão que dispara a busca (ou o formulário) -->
                 </form>
             </div>
         </div>
     </div>
     <section class="hero-banner">
+        <!-- Seção de destaque (banner principal) -->
         <div class="banner-content">
             <h1>PRODUTOS ESPORTIVOS</h1>
+            <!-- Título principal da página -->
         </div>
     </section>
 
     <section class="featured-products">
+        <!-- Seção que lista produtos em destaque -->
         <div class="container-nav"> 
             <h2>PRODUTOS EM DESTAQUE</h2>
             <div id="product-list" class="product-grid">
+                <!-- Container onde os produtos serão inseridos dinamicamente via JS -->
                 <p>Carregando produtos...</p>
+                <!-- Texto inicial mostrado enquanto a busca por produtos ocorre -->
             </div>
         </div>
     </section>
 
     <footer>
+        <!-- Rodapé do site -->
         <div class="container-nav"> 
             <p>© 2025 FutShop. Todos os direitos reservados.</p>
+            <!-- Informações de copyright e ano -->
         </div>
     </footer>
 
+    <!-- Modal de Login/Cadastro -->
     <div id="login-modal" class="modal">
+        <!-- Elemento modal oculto por padrão; exibido via JS quando necessário -->
         <div class="modal-content">
             <span class="close-button">&times;</span>
+            <!-- Botão para fechar o modal (X) -->
             <div class="modal-header">
                 <h3>Acesse sua conta ou cadastre-se</h3>
             </div>
             
             <div class="modal-body">
                 <div class="feedback-message" style="display: none; padding: 10px; margin-bottom: 15px; border-radius: 4px;"></div>
+                <!-- Área para mensagens de feedback (sucesso/erro) mostrada dinamicamente pelo JS -->
             
                 <div class="auth-section">
+                    <!-- Seção padrão de login -->
                     <h4>Acesso FutShop</h4>
                     <form id="login-form">
+                        <!-- Formulário de login com campos obrigatórios -->
                         <input type="email" placeholder="Email" required>
                         <input type="password" placeholder="Senha" required>
                         <button type="submit" class="auth-button">Entrar</button>
                     </form>
                     <p class="switch-link">Não tem conta? <a href="#" id="show-register">Cadastre-se</a></p>
+                    <!-- Link que alterna para a aba de cadastro dentro do modal -->
                 </div>
                 
                 <div class="auth-section register-section hidden">
+                    <!-- Seção de cadastro inicialmente escondida (classe .hidden) -->
                     <h4>Crie sua conta</h4>
                     <form id="register-form">
+                        <!-- Formulário de cadastro com campos necessários -->
                         <input type="text" placeholder="Nome" required>
                         <input type="email" placeholder="Email" required>
                         <input type="password" placeholder="Senha" required>
                         <button type="submit" class="auth-button">Cadastrar</button>
                     </form>
                     <p class="switch-link">Já tem conta? <a href="#" id="show-login">Fazer Login</a></p>
+                    <!-- Link que alterna de volta para a aba de login -->
                 </div>
             </div>
         </div>
     </div>
     
+    <!-- Modal do Carrinho de Compras -->
     <div id="cart-modal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -103,18 +145,23 @@
                 <span class="close-button" id="close-cart-modal">&times;</span>
             </div>
             <div id="cart-items">
+                <!-- Espaço onde os itens do carrinho serão renderizados via JS -->
                 <p style="text-align: center; color: #555; padding: 20px;">Seu carrinho está vazio.</p>
+                <!-- Mensagem padrão quando não há itens -->
             </div>
             <div id="cart-summary">
+                <!-- Resumo do valor total do carrinho -->
                 <p>Total: <strong id="cart-total">R$ 0,00</strong></p>
             </div>
             <div id="cart-actions">
+                <!-- Ações disponíveis no carrinho: checkout e limpar -->
                 <button id="checkout-button" class="auth-button">FINALIZAR COMPRA</button>
                 <button id="clear-cart-button" class="auth-button" style="background-color: #555;">LIMPAR CARRINHO</button>
             </div>
         </div>
     </div>
     
+    <!-- Inclusão do script principal que contém a lógica em JS (busca, carrinho, modal) -->
     <script src="js/script.js"></script>
 </body>
 </html>

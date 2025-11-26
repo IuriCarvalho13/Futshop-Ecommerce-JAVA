@@ -1,39 +1,58 @@
+// Pacote onde a classe Produto está localizada
 package com.futshop.model;
 
+// Importa anotação para personalizar colunas do banco
 import jakarta.persistence.Column;
+// Indica que esta classe será uma entidade JPA mapeada no banco de dados
 import jakarta.persistence.Entity;
+// Indica que o valor do ID será gerado automaticamente
 import jakarta.persistence.GeneratedValue;
+// Define o tipo de estratégia de geração do ID (IDENTITY = auto incremental)
 import jakarta.persistence.GenerationType;
+// Indica qual atributo será a chave primária da entidade
 import jakarta.persistence.Id;
+// Anotação usada para campos grandes (como textos longos), salva como LONGTEXT/TEXT no banco
 import jakarta.persistence.Lob; 
 
+// Marca esta classe como uma entidade JPA, ou seja, corresponde a uma tabela no banco
 @Entity
 public class Produto {
 
+    // Define o campo como a chave primária da tabela
     @Id
+    // Define que o ID será gerado automaticamente pelo banco (auto-increment)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
+    // Nome do produto (ex.: Camisa Real Madrid)
     private String nome;
+
+    // Descrição completa do produto
     private String descricao;
+
+    // Preço do produto (ex.: 199.99)
     private Double preco;
     
-    // ATUALIZAÇÃO para URLs longas
-    @Lob 
-    @Column(name = "imagem_url", columnDefinition = "TEXT") 
+    // Permite armazenar URLs longas da imagem sem limite de caracteres
+    @Lob // Indica campo grande
+    @Column(name = "imagem_url", columnDefinition = "TEXT") // Força tipo TEXT no banco
     private String imagemUrl;
 
+    // Tamanho da camisa (ex.: P, M, G, GG)
     private String tamanho;
+
+    // Quantidade disponível no estoque
     private Integer quantidadeEmEstoque;
     
-    // Construtor Vazio (Necessário pelo JPA)
+    // Construtor vazio obrigatório para o JPA criar objetos via reflexão
     public Produto() {
     }
 
-    // --- GETTERS E SETTERS ---
-    
-    // Você DEVE ter estes métodos para que o Spring envie os dados ao frontend
-    
+    // ------------------------
+    // GETTERS E SETTERS
+    // ------------------------
+    // Necessários para o Spring e JPA acessarem/alterarem os valores
+
     public Long getId() {
         return id;
     }
