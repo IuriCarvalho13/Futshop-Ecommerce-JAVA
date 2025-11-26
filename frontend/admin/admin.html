@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FutShop | Área Administrativa</title>
+    <link rel="stylesheet" href="../css/style.css"> 
+    <style>
+        /* Estilos básicos para a página Admin */
+        body { background-color: #f4f4f4; }
+        .admin-container {
+            max-width: 1200px;
+            margin: 50px auto;
+            padding: 40px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .admin-container h1 {
+            color: #000;
+            border-bottom: 3px solid #000;
+            padding-bottom: 10px;
+        }
+        .header-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .logout-button {
+            background-color: #cc0000;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            font-size: 1em;
+            text-transform: uppercase;
+        }
+        .logout-button:hover { background-color: #990000; }
+        
+        /* Estilos CRUD */
+        .crud-section { margin-top: 40px; padding: 20px; border: 1px solid #eee; }
+        .crud-section h3 { margin-top: 0; }
+        .crud-form input, .crud-form select { 
+            padding: 8px; margin: 5px 0 15px 0; width: 100%; box-sizing: border-box; 
+        }
+        .crud-form textarea {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0 15px 0;
+            box-sizing: border-box;
+            resize: vertical;
+        }
+        .btn-action { 
+            background-color: #000; color: white; padding: 10px 15px; border: none; cursor: pointer; margin-right: 10px; 
+            min-width: 100px;
+        }
+        .btn-action.delete { background-color: #cc0000; }
+        .btn-action.edit { background-color: #444; }
+        .btn-action:hover { opacity: 0.8; }
+        
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ddd; padding: 10px; text-align: left; font-size: 0.9em; }
+        th { background-color: #f2f2f2; }
+        td:nth-child(2) { max-width: 250px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .admin-message { margin-top: 15px; padding: 10px; border-radius: 4px; }
+        .admin-message.success { background-color: #d4edda; color: #155724; border-color: #c3e6cb; }
+        .admin-message.error { background-color: #f8d7da; color: #721c24; border-color: #f5c6cb; }
+
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <h1>Dashboard Administrativo</h1>
+
+        <div class="header-controls">
+            <p>Bem-vindo(a), **<span id="admin-name">Administrador</span>**.</p>
+            <button id="logout-button" class="logout-button">Sair da Área Admin</button>
+        </div>
+
+        <div class="crud-section">
+            <h3>Gerenciamento de Produtos</h3>
+            
+            <form id="product-form" class="crud-form">
+                <input type="hidden" id="product-id">
+                
+                <label for="product-name">Nome do Produto:</label>
+                <input type="text" id="product-name" required>
+
+                <label for="product-description">Descrição (Opcional):</label>
+                <textarea id="product-description" rows="2"></textarea>
+                
+                <label for="product-price">Preço (R$):</label>
+                <input type="number" id="product-price" step="0.01" required>
+
+                <label for="product-size">Tamanho:</label>
+                <select id="product-size" required>
+                    <option value="P">P</option>
+                    <option value="M">M</option>
+                    <option value="G">G</option>
+                    <option value="GG">GG</option>
+                </select>
+
+                <label for="product-stock">Quantidade em Estoque:</label>
+                <input type="number" id="product-stock" min="0" required>
+                
+                <label for="product-image">URL da Imagem (Base64 ou URL):</label>
+                <input type="text" id="product-image" required>
+                
+                <button type="submit" id="submit-button" class="btn-action">Adicionar Produto</button>
+                <button type="button" id="cancel-button" class="btn-action edit" style="display:none;">Cancelar Edição</button>
+            </form>
+
+            <p id="admin-message" class="admin-message"></p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nome</th>
+                        <th>Preço</th>
+                        <th>Estoque</th>
+                        <th>Tamanho</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody id="product-table-body">
+                    <tr><td colspan="6">Carregando produtos...</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="../js/admin.js"></script>
+</body>
+</html>

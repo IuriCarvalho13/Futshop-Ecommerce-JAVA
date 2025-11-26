@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FutShop | Sua Loja de Artigos Esportivos</title>
+    <link rel="stylesheet" href="css/style.css"> 
+</head>
+<body>
+    
+    <header class="top-header">
+        <div class="container-top container-flex">
+            
+            <div id="auth-cart-group">
+                
+                <div id="auth-container">
+                    <a href="#" id="open-login-modal" class="top-link">LOGIN/CADASTRO</a> 
+                    
+                    <button id="logout-button-client" style="display: none;">Sair</button>
+                </div>
+                
+                <a href="#" class="cart-icon" id="open-cart-modal">🛒 <span class="cart-count">0</span></a>
+            </div>
+            
+        </div>
+    </header>
+
+    <nav class="main-nav">
+        <div class="container-nav">
+            <div class="logo">FutShop</div>
+        </div>
+    </nav>
+
+    <div class="search-container">
+        <div class="container-nav">
+            <div class="search-bar">
+                <form id="search-form">
+                    <input type="text" id="search-input" placeholder="O que você procura?">
+                    <button type="submit" id="search-button">🔍</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <section class="hero-banner">
+        <div class="banner-content">
+            <h1>PRODUTOS ESPORTIVOS</h1>
+        </div>
+    </section>
+
+    <section class="featured-products">
+        <div class="container-nav"> 
+            <h2>PRODUTOS EM DESTAQUE</h2>
+            <div id="product-list" class="product-grid">
+                <p>Carregando produtos...</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container-nav"> 
+            <p>© 2025 FutShop. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <div id="login-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <div class="modal-header">
+                <h3>Acesse sua conta ou cadastre-se</h3>
+            </div>
+            
+            <div class="modal-body">
+                <div class="feedback-message" style="display: none; padding: 10px; margin-bottom: 15px; border-radius: 4px;"></div>
+            
+                <div class="auth-section">
+                    <h4>Acesso FutShop</h4>
+                    <form id="login-form">
+                        <input type="email" placeholder="Email" required>
+                        <input type="password" placeholder="Senha" required>
+                        <button type="submit" class="auth-button">Entrar</button>
+                    </form>
+                    <p class="switch-link">Não tem conta? <a href="#" id="show-register">Cadastre-se</a></p>
+                </div>
+                
+                <div class="auth-section register-section hidden">
+                    <h4>Crie sua conta</h4>
+                    <form id="register-form">
+                        <input type="text" placeholder="Nome" required>
+                        <input type="email" placeholder="Email" required>
+                        <input type="password" placeholder="Senha" required>
+                        <button type="submit" class="auth-button">Cadastrar</button>
+                    </form>
+                    <p class="switch-link">Já tem conta? <a href="#" id="show-login">Fazer Login</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="cart-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>🛒 Seu Carrinho de Compras</h3>
+                <span class="close-button" id="close-cart-modal">&times;</span>
+            </div>
+            <div id="cart-items">
+                <p style="text-align: center; color: #555; padding: 20px;">Seu carrinho está vazio.</p>
+            </div>
+            <div id="cart-summary">
+                <p>Total: <strong id="cart-total">R$ 0,00</strong></p>
+            </div>
+            <div id="cart-actions">
+                <button id="checkout-button" class="auth-button">FINALIZAR COMPRA</button>
+                <button id="clear-cart-button" class="auth-button" style="background-color: #555;">LIMPAR CARRINHO</button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="js/script.js"></script>
+</body>
+</html>

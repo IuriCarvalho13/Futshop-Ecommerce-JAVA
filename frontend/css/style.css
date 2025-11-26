@@ -1,0 +1,556 @@
+/* Configurações Globais P&B e Fontes */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f8f8; /* Branco Sujo */
+    color: #333; /* Cinza Escuro para texto */
+}
+
+/* 1. Container Padrão para Centralização */
+.container-nav {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 10px 20px;
+}
+
+/* 2. Container Flexível */
+.container-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Container de Topo (Ajustado) */
+.container-top {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 5px 20px;
+    display: flex; 
+    justify-content: flex-end; 
+    align-items: center;
+}
+
+/* Cabeçalho Superior */
+.top-header {
+    background-color: #fff;
+    border-bottom: 1px solid #eee;
+}
+
+/* ---------------------------------------------------------------------- */
+/* --- GRUPO DE AUTENTICAÇÃO/CARRINHO (Topo Superior) --- */
+/* ---------------------------------------------------------------------- */
+
+/* Container que agrupa a Autenticação e o Carrinho no topo */
+#auth-cart-group {
+    display: flex;
+    align-items: center;
+    gap: 25px; /* Espaço entre Login/Logout e Carrinho */
+}
+
+/* Container que segura o nome do usuário e o botão Sair */
+#auth-container {
+    display: flex;
+    align-items: center;
+    gap: 5px; 
+}
+
+/* Estilo para o Link de Login/Nome de Usuário */
+.top-link {
+    font-size: 1.1em; /* Tamanho maior */
+    text-decoration: none;
+    color: #000; 
+    font-weight: bold; 
+    margin-left: 0; 
+    white-space: nowrap;
+}
+
+/* Estilo para o Ícone do Carrinho */
+.cart-icon {
+    font-size: 1.5em; /* Tamanho maior */
+    margin-left: 0; 
+    text-decoration: none;
+    color: #000;
+    font-weight: bold;
+}
+
+/* Estilo para o Botão de Logout (Sair) */
+#logout-button-client {
+    background-color: #cc0000; 
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    cursor: pointer;
+    font-size: 0.9em; 
+    text-transform: uppercase;
+    border-radius: 3px;
+    white-space: nowrap;
+}
+
+/* ---------------------------------------------------------------------- */
+/* --- NAVEGAÇÃO PRINCIPAL E BUSCA (AJUSTADO) --- */
+/* ---------------------------------------------------------------------- */
+
+.main-nav {
+    background-color: #fff;
+    padding: 10px 0;
+}
+
+/* Centraliza o Logo FutShop */
+.main-nav .container-nav {
+    text-align: center; 
+}
+
+.logo {
+    font-size: 1.8em;
+    font-weight: bold;
+    color: #000;
+}
+
+/* NOVO BLOCO: Container da Busca (Separa a busca e define a borda principal) */
+.search-container {
+    background-color: #fff;
+    padding: 0 0 20px; 
+    border-bottom: 2px solid #000; /* Borda de separação principal */
+}
+
+/* NOVO BLOCO: Garante que o FORM ocupe 100% do .search-bar e controle os filhos */
+#search-form {
+    display: flex; 
+    width: 100%; 
+}
+
+/* Estilos da Barra de Pesquisa */
+.search-bar {
+    display: flex;
+    align-items: center;
+    max-width: 500px; 
+    margin: 0 auto; /* Centraliza a barra de busca */
+    border: 2px solid #000;
+    transition: box-shadow 0.2s;
+}
+
+.search-bar:focus-within {
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
+}
+
+/* CORREÇÃO: Aplica flex-grow apenas ao campo de texto */
+.search-bar input[type="text"] { 
+    flex-grow: 1;
+    padding: 10px 15px;
+    border: none;
+    font-size: 1em;
+    outline: none;
+}
+
+.search-bar button {
+    background-color: #000;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.2s;
+    flex-shrink: 0; /* Impede que o botão encolha */
+}
+
+.search-bar button:hover {
+    background-color: #333;
+}
+
+/* ---------------------------------------------------------------------- */
+/* --- BANNER E PRODUTOS --- */
+/* ---------------------------------------------------------------------- */
+
+/* Banner Principal */
+.hero-banner {
+    position: relative;
+    height: 350px; 
+    background-color: #111; 
+    margin-bottom: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background-image: url('caminho/para/imagem-banner.jpg'); 
+    background-size: cover;
+    background-position: center;
+}
+
+.banner-content {
+    color: #fff;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.4); 
+}
+
+.banner-content h1 {
+    font-size: 3em;
+    margin: 0;
+}
+
+.banner-content p {
+    font-size: 1.5em;
+    margin: 5px 0 0;
+}
+
+/* Seção de Produtos */
+.featured-products {
+    padding-bottom: 50px;
+}
+
+.featured-products h2 {
+    text-align: left; 
+    margin-bottom: 30px;
+    font-size: 1.5em;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 10px;
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+    gap: 25px;
+}
+
+/* Estilo do Card de Produto */
+.product-card {
+    background-color: #fff;
+    border: 1px solid #eee;
+    text-align: center;
+    padding: 15px;
+    transition: box-shadow 0.3s;
+}
+
+.product-card:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.product-card img {
+    width: 100%;
+    height: auto;
+    max-height: 200px;
+    object-fit: contain;
+}
+
+.product-card h3 {
+    font-size: 1.1em;
+    color: #000;
+    margin: 10px 0 5px; 
+}
+
+/* Estilo para os parágrafos de Tamanho e Estoque */
+.product-card p {
+    font-size: 0.95em; 
+    color: #444; 
+    margin: 5px 0; 
+    line-height: 1.2;
+}
+
+.product-card p strong {
+    color: #000; 
+    font-weight: bold;
+}
+
+.product-card p.price {
+    font-size: 1.3em;
+    font-weight: bold;
+    color: #000;
+    margin-bottom: 15px;
+}
+
+.add-to-cart {
+    background-color: #000;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.add-to-cart:hover {
+    background-color: #333;
+}
+
+/* Footer Style */
+footer {
+    background-color: #333;
+    color: #fff;
+    padding: 20px 0;
+    text-align: center; 
+    margin-top: 40px;
+    border-top: 5px solid #000;
+}
+
+/* ---------------------------------------------------------------------- */
+/* --- ESTILOS DO MODAL DE LOGIN/CADASTRO --- */
+/* ---------------------------------------------------------------------- */
+
+.modal {
+    display: none; 
+    position: fixed; 
+    z-index: 1000; 
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.8); 
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: 10% auto; 
+    padding: 30px;
+    border: 1px solid #000;
+    width: 80%;
+    max-width: 450px; 
+    position: relative;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+}
+
+.modal-header h3 {
+    text-align: center;
+    color: #000;
+    margin-top: 0;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+.close-button {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    cursor: pointer;
+}
+
+.close-button:hover,
+.close-button:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Estilos dos Formulários de Autenticação */
+.auth-section {
+    padding: 15px 0;
+}
+
+.auth-section h4 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.auth-section input {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+.auth-button {
+    background-color: #000;
+    color: white;
+    padding: 12px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.auth-button:hover {
+    background-color: #333;
+}
+
+.switch-link {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.switch-link a {
+    color: #000;
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* Estilos para o Feedback de Cadastro/Login */
+.feedback-message {
+    background-color: #e6ffe6; 
+    color: #006600; 
+    border: 1px solid #b3ffb3;
+    padding: 15px;
+    margin-bottom: 20px;
+    text-align: center;
+    font-weight: bold;
+    border-radius: 4px;
+}
+
+/* ---------------------------------------------------------------------- */
+/* --- ESTILOS ESPECÍFICOS DO CARRINHO (Novo) --- */
+/* ---------------------------------------------------------------------- */
+
+/* Ajusta o conteúdo do Modal para ter margem no topo */
+#cart-modal .modal-content {
+    max-width: 600px; /* Maior que o modal de login */
+    padding: 20px;
+}
+
+#cart-modal .modal-header h3 {
+    text-align: left;
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+/* Container de cada item dentro do carrinho */
+.cart-item-detail {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 0;
+    border-bottom: 1px dashed #ddd; /* Linha de separação discreta */
+    gap: 10px;
+}
+
+.cart-item-detail:last-child {
+    border-bottom: none;
+}
+
+/* Imagem do Produto no Carrinho */
+.cart-item-detail img {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+    margin-right: 15px;
+    flex-shrink: 0; /* Impede que a imagem encolha */
+}
+
+/* Informações do Item */
+.cart-item-detail .item-info {
+    flex-grow: 1;
+    min-width: 120px; /* Garante espaço mínimo */
+}
+
+.cart-item-detail .item-name {
+    font-weight: bold;
+    margin: 0 0 5px 0;
+    font-size: 1em;
+    color: #000;
+}
+
+.cart-item-detail .item-price {
+    font-size: 0.9em;
+    color: #555;
+    margin: 0;
+}
+
+/* Controle de Quantidade */
+.cart-item-detail .item-quantity-control {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-right: 15px;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.cart-item-detail .update-qty {
+    width: 50px;
+    padding: 5px;
+    text-align: center;
+    border: 1px solid #ccc;
+    box-sizing: border-box; /* Inclui padding e borda na largura total */
+}
+
+.cart-item-detail .remove-from-cart {
+    background-color: #cc0000;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-weight: bold;
+    border-radius: 3px;
+    font-size: 0.8em;
+    line-height: 1; /* Alinha o texto X */
+}
+
+.cart-item-detail .item-subtotal {
+    font-weight: bold;
+    color: #000;
+    font-size: 1em;
+    text-align: right;
+    width: 100px; /* Largura fixa para subtotal */
+    flex-shrink: 0;
+}
+
+/* Resumo e Ações */
+#cart-summary {
+    padding: 15px 0;
+    border-top: 2px solid #000;
+    text-align: right;
+    font-size: 1.2em;
+}
+
+#cart-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-top: 10px;
+}
+
+/* Estilo específico para o botão Limpar Carrinho */
+#clear-cart-button {
+    background-color: #555;
+}
+
+#clear-cart-button:hover {
+    background-color: #777;
+}
+
+/* Responsividade básica para o modal do carrinho */
+@media (max-width: 600px) {
+    #cart-modal .modal-content {
+        width: 90%;
+        margin: 5% auto;
+    }
+    
+    .cart-item-detail {
+        flex-wrap: wrap; /* Permite quebrar linha em telas pequenas */
+        justify-content: flex-start;
+        align-items: flex-start;
+    }
+    
+    .cart-item-detail .item-quantity-control {
+        order: 3; /* Move o controle de quantidade para baixo */
+        margin-right: 0;
+        width: 50%;
+        justify-content: flex-start;
+    }
+    
+    .cart-item-detail .item-subtotal {
+        order: 4; /* Move o subtotal para baixo */
+        width: 50%;
+        text-align: right;
+    }
+    
+    .cart-item-detail img {
+        margin-right: 10px;
+    }
+    
+    .cart-item-detail .item-info {
+        max-width: 100%;
+        flex-grow: 1;
+    }
+}
